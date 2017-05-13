@@ -47,24 +47,37 @@ import ftplib
 def main():
 
     print('\n')
+    # User selects Anonymous FTP Server
     ftpname = raw_input("Select Anonymous FTP Server: ")
+
+    # Username and password used for Anonymous FTP login
     username = ("anonymous")
     password = (" ")
 
+    # Connect to FTP server
     ftp =  ftplib.FTP(ftpname)
+
+    # Display connection information and login attempt
     ftp.set_debuglevel(2)
     ftp.connect()
-
     ftp.login(username, password)
+
+    # If successful, connect and display directory listing
     print ("Connected to FTP server...")
     ftp.dir()
+
+    # Append information to List
     dl = []
     dirList = ftp.dir(dl.append)
     print (dirList)
+
+    # Terminate and close connection
     ftp.quit()
     ftp.close()
+
+    # Return FTP login directory listing
     print ("---------------")
-    print ("FTP ROOT DIRECTORY LIST:")
+    print ("FTP LOGIN DIRECTORY LIST:")
     for row in dl:
         print(row)
     print ('------------')
