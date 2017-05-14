@@ -44,7 +44,6 @@ import os, sys
 import socket
 import ftplib
 
-global ftpname
 
 # Attempt socket banner grab
 
@@ -58,6 +57,7 @@ def soc_banner():
 
 
 def main():
+    global ftpname
 
     # Username and password used for Anonymous FTP login
     username = ("anonymous")
