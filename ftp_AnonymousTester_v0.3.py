@@ -1,13 +1,13 @@
 ######################################################################################
-#   Name:    ftp_AnonymousTester_v0.1.py
+#   Name:    ftp_AnonymousTester_v0.3.py
 #   Author:  Kevin Figueroa
 #   License: BSD
 #   Purpose: Test Anonymous FTP login with 
 #               username: anonoymous 
 #               password: <blank>
 #            
-#            If login successful, display connection steps, and retreive FTP root 
-#            directory listing.
+#            If login successful, display connection steps, FTP banner grab, and 
+#            retreive FTP root directory listing.
 #
 #   
 #   Copyright (c) 2017, Kevin Figueroa
@@ -41,14 +41,23 @@
 #!/usr/bin/env python
 
 import os, sys
+import socket
 import ftplib
+
+global ftpname
+
+# Attempt socket banner grab
+
+def soc_banner():
+
+    # Perform port banner grab
+    ftp_port = int(21)
+    ftpsoc = socket.socket()
+    ftpsoc.connect((ftpname,ftp_port))
+    ftp_banner = ftpsoc.recv(2048)
 
 
 def main():
-
-    print('\n')
-    # User selects Anonymous FTP Server
-    ftpname = raw_input("Select Anonymous FTP Server: ")
 
     # Username and password used for Anonymous FTP login
     username = ("anonymous")
@@ -61,6 +70,13 @@ def main():
     ftp.set_debuglevel(2)
     ftp.connect()
     ftp.login(username, password)
+
+    # Perform port banner grab
+    ftp_port = int(21)
+    ftpsoc = socket.socket()
+    ftpsoc.connect((ftpname,ftp_port))
+    ftp_banner = ftpsoc.recv(2048)
+
 
     # If successful, connect and display directory listing
     print ("Connected to FTP server...")
@@ -77,13 +93,21 @@ def main():
 
     # Return FTP login directory listing
     print ("---------------")
-    print ("FTP LOGIN DIRECTORY LIST:")
+    print ("\nFTP BANNER:\n")
+    print (ftp_banner)
+    print ("---------------")
+    print ("\nFTP LOGIN DIRECTORY LIST:\n")
     for row in dl:
         print(row)
     print ('------------')
 
 
 if __name__ == '__main__':
+    print('\n')
+    # User selects Anonymous FTP Server
+    ftpname = raw_input("Select Anonymous FTP Server: ")
+    soc_banner()
     main()
+
 
 #END
