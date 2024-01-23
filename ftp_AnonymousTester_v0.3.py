@@ -105,7 +105,7 @@ def main():
 if __name__ == '__main__':
     print('\n')
     # User selects Anonymous FTP Server
-    ftpname = raw_input("Select Anonymous FTP Server: ")
+    ftpname = input("Select Anonymous FTP Server: ")
     soc_banner()
     main()
 
